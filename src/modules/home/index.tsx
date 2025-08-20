@@ -28,6 +28,8 @@ import {
 import { useToast } from '@/components/ui/use-toast'
 import { Toggle } from '@/components/ui/toggle'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { ExportDropdown, exportGraph } from '@/modules/export'
+import type { ExportFormat } from '@/modules/export'
 
 function Home() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -128,6 +130,37 @@ function Home() {
     toast({ description: t('Permalink copied.') })
   }
 
+  const handleExport = async (format: ExportFormat) => {
+    try {
+      // 查找图形容器元素
+      // 获取SVG的父容器，而不是SVG元素本身
+      const svgElement = document.querySelector('[data-testid="graph"]') as SVGElement
+      const graphElement = svgElement?.parentElement || svgElement
+      if (!graphElement) {
+        toast({ 
+          description: t('No graph to export'), 
+          variant: 'destructive' 
+        })
+        return
+      }
+
+      // 生成文件名
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/[:.]/g, '-')
+      const filename = `regex-graph-${timestamp}`
+
+      await exportGraph(format, graphElement, filename)
+      toast({ 
+        description: t(`Graph exported as ${format.toUpperCase()}`) 
+      })
+    } catch (error) {
+      console.error('Export failed:', error)
+      toast({ 
+        description: t('Export failed'), 
+        variant: 'destructive' 
+      })
+    }
+  }
+
   const graphShow = regex !== '' || (ast.body.length > 0 && !errorMsg)
   return (
     <div
@@ -158,14 +191,21 @@ function Home() {
           onCopy={handleCopyPermalink}
           className={clsx({ 'border-t': graphShow })}
         />
-        <Toggle
-          size="sm"
-          className="absolute top-2 right-2"
-          pressed={!editorCollapsed}
-          onPressedChange={(pressed: boolean) => setEditorCollapsed(!pressed)}
-        >
-          <ViewVerticalIcon />
-        </Toggle>
+        <div className="absolute top-2 right-2 flex items-center gap-2">
+          {graphShow && (
+            <ExportDropdown
+              onExport={handleExport}
+              disabled={!graphShow}
+            />
+          )}
+          <Toggle
+            size="sm"
+            pressed={!editorCollapsed}
+            onPressedChange={(pressed: boolean) => setEditorCollapsed(!pressed)}
+          >
+            <ViewVerticalIcon />
+          </Toggle>
+        </div>
       </div>
       {regex !== null && <Editor defaultTab={editorDefaultTab} collapsed={editorCollapsed} />}
     </div>
