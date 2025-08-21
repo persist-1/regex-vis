@@ -189,7 +189,9 @@ function getComputedStylesForSVG(svgElement: SVGElement): string {
   // Add basic styles, use black as export color
   styles.push(`
     .stroke-graph { stroke: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; stroke-width: 1; }
-    .fill-transparent { fill: transparent !important; stroke: none !important; }
+    .fill-transparent { fill: transparent !important; }
+    /* Ensure circle elements with fill-transparent still show their stroke */
+    circle.fill-transparent { stroke: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; }
     .text-foreground { fill: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; }
     .rounded-lg { rx: 8; ry: 8; }
     .border { stroke: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; stroke-width: 1; }
