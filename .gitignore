@@ -131,3 +131,15 @@ yarn-error.log*
 /export
 
 .swc
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+.tests-examples/
+.playwright.config.ts
+.reference/
+.rules
+.debug_tools/

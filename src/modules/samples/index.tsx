@@ -19,21 +19,25 @@ function Samples() {
   return (
     <div className="flex h-full bg-graph-bg">
       {/* Left sidebar */}
-      <div className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 flex-shrink-0">
+      <div className="w-64 bg-white dark:bg-black border-r border-gray-200 dark:border-gray-700 flex-shrink-0">
         <div className="p-4">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-            Regex Samples
+            {t('Regex Samples')}
           </h2>
           <div className="space-y-2">
             {/* All categories button */}
             <Button
               variant={selectedCategory === 'all' ? 'default' : 'ghost'}
-              className="w-full justify-between text-left h-auto p-3 mb-1 rounded-md font-medium"
+              className={`w-full justify-between text-left h-auto p-3 mb-1 rounded-md font-medium ${
+                selectedCategory === 'all' 
+                  ? 'dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white' 
+                  : 'dark:hover:bg-gray-800'
+              }`}
               onClick={() => setSelectedCategory('all')}
             >
               <div className="flex items-center">
                 <span className="mr-3 text-base">📋</span>
-                <span>All Categories</span>
+                <span>{t('All Categories')}</span>
               </div>
               <span className="text-sm opacity-70">{getAllSamples().length}</span>
             </Button>
@@ -43,12 +47,16 @@ function Samples() {
               <Button
                 key={category.id}
                 variant={selectedCategory === category.id ? 'default' : 'ghost'}
-                className="w-full justify-between text-left h-auto p-3 mb-1 rounded-md font-medium"
+                className={`w-full justify-between text-left h-auto p-3 mb-1 rounded-md font-medium ${
+                  selectedCategory === category.id 
+                    ? 'dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white' 
+                    : 'dark:hover:bg-gray-800'
+                }`}
                 onClick={() => setSelectedCategory(category.id)}
               >
                 <div className="flex items-center">
                   <span className="mr-3 text-base">{category.icon}</span>
-                  <span>{category.name}</span>
+                  <span>{t(category.name)}</span>
                 </div>
                 <span className="text-sm opacity-70">{category.samples.length}</span>
               </Button>
@@ -70,15 +78,15 @@ function Samples() {
                 {currentSamples.map((sample, index) => {
                   const linkTo = `/?r=${encodeURIComponent(`/${sample.regex}/`)}`
                   return (
-                    <div key={`${sample.regex}-${index}`} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg transition-all duration-200">
+                    <div key={`${sample.regex}-${index}`} className="bg-white dark:bg-black rounded-lg border border-gray-200 dark:border-gray-700 p-6 hover:shadow-lg transition-all duration-200">
                       {/* Sample title and description */}
                       <div className="mb-4">
                         <Link to={linkTo} className="group">
                           <h3 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
-                            {sample.desc}
+                            {t(sample.desc)}
                           </h3>
                           <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                            {sample.explanation}
+                            {sample.explanation ? t(sample.explanation) : ''}
                           </p>
                         </Link>
                       </div>
@@ -113,7 +121,7 @@ function Samples() {
                 <div className="text-center py-12">
                   <div className="text-gray-400 dark:text-gray-500 text-lg mb-2">📝</div>
                   <p className="text-gray-600 dark:text-gray-400">
-                    No regex samples available for this category
+                    {t('No regex samples available for this category')}
                   </p>
                 </div>
               )}
