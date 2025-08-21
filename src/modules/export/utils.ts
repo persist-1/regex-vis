@@ -40,6 +40,18 @@ export const exportSVG = (svgElement: SVGElement, filename: string = EXPORT_CONF
     clonedSvg.setAttribute('xmlns', EXPORT_CONFIG.SVG_NAMESPACE)
     clonedSvg.setAttribute('xmlns:xlink', EXPORT_CONFIG.XLINK_NAMESPACE)
     
+    // Modify icon dimensions before serialization
+    const quantifierIcons = clonedSvg.querySelectorAll('svg[viewBox="0 0 24 24"]')
+    quantifierIcons.forEach(icon => {
+      icon.setAttribute('width', '18')
+      icon.setAttribute('height', '10')
+    })
+    
+    const infinityIcons = clonedSvg.querySelectorAll('svg[viewBox="0 0 256 256"]')
+    infinityIcons.forEach(icon => {
+      icon.setAttribute('width', '18')
+      icon.setAttribute('height', '10')
+    })
 
     // Get computed styles and inline them into SVG
     const styleElement = document.createElementNS('http://www.w3.org/2000/svg', 'style')
@@ -51,15 +63,15 @@ export const exportSVG = (svgElement: SVGElement, filename: string = EXPORT_CONF
     const serializer = new XMLSerializer()
     let svgString = serializer.serializeToString(clonedSvg)
     
-    // Replace icon placeholders with actual SVG elements using proper SVG positioning
+    // Replace icon placeholders with actual SVG elements
     svgString = svgString.replace(/{{INFINITY_ICON}}/g, 
-      `<svg width="${EXPORT_CONFIG.DEFAULT_ICON_WIDTH}" height="${EXPORT_CONFIG.DEFAULT_ICON_HEIGHT}" viewBox="0 0 256 256" fill="currentColor" xmlns="${EXPORT_CONFIG.SVG_NAMESPACE}" style="display: inline; vertical-align: middle;">`+
+      `<svg viewBox="0 0 256 256" fill="currentColor" xmlns="${EXPORT_CONFIG.SVG_NAMESPACE}" style="display: inline; vertical-align: middle;">`+
       `<path d="${EXPORT_CONFIG.SVG_PATHS.INFINITY}"/>`+
       `</svg>`
     )
     
     svgString = svgString.replace(/{{QUANTIFIER_ICON}}/g,
-      `<svg width="${EXPORT_CONFIG.DEFAULT_ICON_WIDTH}" height="${EXPORT_CONFIG.DEFAULT_ICON_HEIGHT}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" xmlns="${EXPORT_CONFIG.SVG_NAMESPACE}" style="display: inline; vertical-align: middle;">`+
+      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" xmlns="${EXPORT_CONFIG.SVG_NAMESPACE}" style="display: inline; vertical-align: middle;">`+
       EXPORT_CONFIG.SVG_PATHS.QUANTIFIER_PATHS.map(path => `<path d="${path}"/>`).join('') +
       `</svg>`
     )
