@@ -85,14 +85,6 @@ export const exportSVG = (svgElement: SVGElement, filename: string = EXPORT_CONF
   }
 }
 
-
-
-
-
-
-
-
-
 /**
  * Extract text content from element and replace icons with placeholders
  * @param element - DOM element to extract text from

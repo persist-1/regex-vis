@@ -25,18 +25,14 @@ function Samples() {
             {t('Regex Samples')}
           </h2>
           <div className="space-y-2">
-            {/* All categories button */}
+            {/* All samples button */}
             <Button
-              variant={selectedCategory === 'all' ? 'default' : 'ghost'}
-              className={`w-full justify-between text-left h-auto p-3 mb-1 rounded-md font-medium ${
-                selectedCategory === 'all' 
-                  ? 'dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white' 
-                  : 'dark:hover:bg-gray-800'
-              }`}
+              variant={selectedCategory ==='all' ? 'default' : 'ghost'}
+              className={`w-full justify-between text-left h-auto p-3 mb-1 rounded-md font-medium border border-input shadow-sm bg-background hover:bg-gray-100 dark:hover:bg-gray-800 text-black dark:text-white hover:text-black dark:hover:text-white ${selectedCategory === 'all' ? 'bg-gray-100 dark:bg-gray-800' : ''}`}
               onClick={() => setSelectedCategory('all')}
             >
               <div className="flex items-center">
-                <span className="mr-3 text-base">📋</span>
+                <span className="mr-3 text-base">📚</span>
                 <span>{t('All Categories')}</span>
               </div>
               <span className="text-sm opacity-70">{getAllSamples().length}</span>
@@ -47,11 +43,7 @@ function Samples() {
               <Button
                 key={category.id}
                 variant={selectedCategory === category.id ? 'default' : 'ghost'}
-                className={`w-full justify-between text-left h-auto p-3 mb-1 rounded-md font-medium ${
-                  selectedCategory === category.id 
-                    ? 'dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white' 
-                    : 'dark:hover:bg-gray-800'
-                }`}
+                className={`w-full justify-between text-left h-auto p-3 mb-1 rounded-md font-medium border border-input shadow-sm bg-background hover:bg-gray-100 dark:hover:bg-gray-800 text-black dark:text-white hover:text-black dark:hover:text-white ${selectedCategory === category.id ? 'bg-gray-100 dark:bg-gray-800' : ''}`}
                 onClick={() => setSelectedCategory(category.id)}
               >
                 <div className="flex items-center">
@@ -94,7 +86,7 @@ function Samples() {
                       {/* Regular expression */}
                       <div className="mb-6">
                         <Link to={linkTo}>
-                          <code className="inline-block bg-gray-100 dark:bg-gray-700 text-teal-600 dark:text-teal-400 font-mono text-base px-4 py-3 rounded-md border hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                          <code className="inline-block bg-gray-100 dark:bg-gray-700 text-black dark:text-white font-mono text-base px-4 py-3 rounded-md border hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                             {sample.label}
                           </code>
                         </Link>
