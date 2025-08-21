@@ -40,7 +40,8 @@ export const exportSVG = (svgElement: SVGElement, filename: string = EXPORT_CONF
   const fillTransparentElements = clonedSvg.querySelectorAll('rect.fill-transparent')
   fillTransparentElements.forEach(element => {
     // Only remove elements that have exactly 'fill-transparent' class and no other classes
-    if (element.className.baseVal === 'fill-transparent') {
+    const svgElement = element as SVGElement
+    if (svgElement.className.baseVal === 'fill-transparent') {
       element.remove()
     }
   })
