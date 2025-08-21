@@ -190,9 +190,14 @@ function getComputedStylesForSVG(svgElement: SVGElement): string {
     .pointer-events-none { pointer-events: none; }
     text { fill: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; dominant-baseline: central; alignment-baseline: middle; }
     path { stroke: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; }
-    rect { stroke: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; }
     circle { stroke: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; }
     line { stroke: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; }
+    /* Preserve negative lookaround assertion red dashed style */
+    rect.stroke-red-500 { stroke: #ef4444 !important; stroke-dasharray: 4 2 !important; }
+    rect[class*="stroke-red-500"][class*="stroke-dasharray"] { stroke: #ef4444 !important; stroke-dasharray: 4 2 !important; }
+    rect[class*="stroke-red-500"] { stroke: #ef4444 !important; }
+    rect[class*="stroke-dasharray"] { stroke-dasharray: 4 2 !important; }
+    rect:not([class*="stroke-red-500"]) { stroke: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; }
   `)
   
   return styles.join('\n')
