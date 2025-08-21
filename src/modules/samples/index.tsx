@@ -17,7 +17,7 @@ function Samples() {
     : getSamplesByCategory(selectedCategory)
 
   return (
-    <div className="flex h-full bg-graph-bg">
+    <div className="flex-1 flex min-h-0 bg-graph-bg">
       {/* Left sidebar */}
       <div className="w-64 bg-white dark:bg-black border-r border-gray-200 dark:border-gray-700 flex-shrink-0">
         <div className="p-4">
