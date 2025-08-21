@@ -86,7 +86,7 @@ function Samples() {
                       {/* Regular expression */}
                       <div className="mb-6">
                         <Link to={linkTo}>
-                          <code className="inline-block bg-gray-100 dark:bg-gray-700 text-black dark:text-white font-mono text-base px-4 py-3 rounded-md border hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                          <code className="inline-block bg-gray-100 dark:bg-gray-800 text-black dark:text-white font-mono text-base px-4 py-3 rounded-md border hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
                             {sample.label}
                           </code>
                         </Link>
