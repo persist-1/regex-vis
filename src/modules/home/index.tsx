@@ -132,8 +132,8 @@ function Home() {
 
   const handleExport = async (format: ExportFormat) => {
     try {
-      // 查找图形容器元素
-      // 获取SVG的父容器，而不是SVG元素本身
+      // Find graph container element
+        // Get the parent container of SVG, not the SVG element itself
       const svgElement = document.querySelector('[data-testid="graph"]') as SVGElement
       const graphElement = svgElement?.parentElement || svgElement
       if (!graphElement) {
@@ -144,7 +144,7 @@ function Home() {
         return
       }
 
-      // 生成文件名
+      // Generate filename
       const timestamp = new Date().toISOString().slice(0, 19).replace(/[:.]/g, '-')
       const filename = `regex-graph-${timestamp}`
 
@@ -153,7 +153,6 @@ function Home() {
         description: t(`Graph exported as ${format.toUpperCase()}`) 
       })
     } catch (error) {
-      console.error('Export failed:', error)
       toast({ 
         description: t('Export failed'), 
         variant: 'destructive' 
