@@ -33,8 +33,17 @@ const EXPORT_CONFIG = {
  */
 export const exportSVG = (svgElement: SVGElement, filename: string = EXPORT_CONFIG.DEFAULT_FILENAME) => {
   try {
-    // Clone SVG element to avoid modifying the original
-    const clonedSvg = svgElement.cloneNode(true) as SVGElement
+    // Clone the SVG element to avoid modifying the original
+  const clonedSvg = svgElement.cloneNode(true) as SVGElement
+  
+  // Remove rect elements that only have 'fill-transparent' class to avoid black borders in export
+  const fillTransparentElements = clonedSvg.querySelectorAll('rect.fill-transparent')
+  fillTransparentElements.forEach(element => {
+    // Only remove elements that have exactly 'fill-transparent' class and no other classes
+    if (element.className.baseVal === 'fill-transparent') {
+      element.remove()
+    }
+  })
     
     // Set SVG xmlns attributes to ensure independence
     clonedSvg.setAttribute('xmlns', EXPORT_CONFIG.SVG_NAMESPACE)
@@ -179,7 +188,7 @@ function getComputedStylesForSVG(svgElement: SVGElement): string {
   // Add basic styles, use black as export color
   styles.push(`
     .stroke-graph { stroke: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; stroke-width: 1; }
-    .fill-transparent { fill: transparent !important; }
+    .fill-transparent { fill: transparent !important; stroke: none !important; }
     .text-foreground { fill: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; }
     .rounded-lg { rx: 8; ry: 8; }
     .border { stroke: ${EXPORT_CONFIG.DEFAULT_COLORS.BLACK} !important; stroke-width: 1; }
